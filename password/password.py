@@ -5,7 +5,7 @@ import string, itertools
 verbose = False
 def main():
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "hecl:s:bx:y:", ["help", "encrypt", "calc", "level", "length", "size", "brute force", "filea", "fileb"])
+        opts, args = getopt.getopt(sys.argv[1:], "he:cl:s:bx:y:", ["help", "encrypt", "calc", "level", "length", "size", "brute force", "filea", "fileb"])
     except getopt.GetoptError as err:
         print(err)
         sys.exit(2)
@@ -122,12 +122,16 @@ def printHelp():
 
     print("-h \t --help \t \t \t Help.")
     print("-e \t --encrypt \t \t \t hash the input passwords within a file and redirect to a output file: output.")
+    print("__________________________________________________")
     print("-c \t --calc \t \t \t calculate all possible passwords for given level and length.")
     print("-l \t --level \t \t \t level 1: a-z \n "
           "\t \t \t \t \t level 2: level 1 + A-Z \n "
           "\t \t \t \t \t level 3 = level 2 + 0-9")
     print("-s \t --size  \t \t \t size of the password.")
-    print("")
+    print("__________________________________________________")
+    print("-b \t --brute-force \t \t \t brute force search which requires additionally two files")
+    print("-x \t --filea \t \t \t file a for brute force")
+    print("-y \t --fileb \t \t \t file b for brute force")
 
 if __name__ == "__main__":
     main()
