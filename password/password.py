@@ -123,7 +123,9 @@ def printHelp():
     print("-h \t --help \t \t \t Help.")
     print("-e \t --encrypt \t \t \t hash the input passwords within a file and redirect to a output file: output.")
     print("-c \t --calc \t \t \t calculate all possible passwords for given level and length.")
-    print("-l \t --level \t \t \t level 1: a-z \n level 2: level 1 + A-Z \n level 3 = level 2 + 0-9")
+    print("-l \t --level \t \t \t level 1: a-z \n "
+          "\t \t \t \t \t level 2: level 1 + A-Z \n "
+          "\t \t \t \t \t level 3 = level 2 + 0-9")
     print("-s \t --size  \t \t \t size of the password.")
     print("")
 
