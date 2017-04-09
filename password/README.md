@@ -1,4 +1,5 @@
 # Manual
+Attention: Only Python 2 is supported.
 
 Project for it-security. Calculation of hashes and brute force method.
 
