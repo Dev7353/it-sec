@@ -1,11 +1,18 @@
-import getopt, sys
+import getopt
+import sys
 import hashlib
-import string, itertools
+import string
+import itertools
 
 verbose = False
+
+
 def main():
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "he:cl:s:bx:y:", ["help", "encrypt", "calc", "level", "length", "size", "brute force", "filea", "fileb"])
+        opts, args = getopt.getopt(
+            sys.argv[
+                1:], "he:cl:s:bx:y:", [
+                "help", "encrypt", "calc", "level", "length", "size", "brute force", "filea", "fileb"])
     except getopt.GetoptError as err:
         print(err)
         sys.exit(2)
@@ -27,7 +34,7 @@ def main():
         elif o in ("-c", "--calc"):
             calcFlag = True
         elif o in ("-l", "--level"):
-            level = int(a);
+            level = int(a)
         elif o in ("-s", "--size"):
             length = int(a)
         elif o in ("-b", "--brute-force"):
@@ -37,16 +44,17 @@ def main():
         elif o in ("-y", "--fileb"):
             fileb = a
 
-    if calcFlag == True:
+    if calcFlag:
         calcCombinations(length, level)
 
-    if bruteForceFlag == True:
+    if bruteForceFlag:
         assert filea is not ""
         assert fileb is not ""
         bruteForce(filea, fileb)
 
+
 def encrypt(a):
-    if verbose == True:
+    if verbose:
         print("Hash File input with SHA1 algorithm.")
 
     output = open("output", 'wb')
@@ -54,10 +62,11 @@ def encrypt(a):
     l = pws.readlines()
 
     for line in l:
-        output.write(encrypt_string(line[:len(line)-1]))
+        output.write(encrypt_string(line[:len(line) - 1]))
         output.write("\n")
     output.close()
     pws.close()
+
 
 def encrypt_string(string):
 
@@ -65,58 +74,56 @@ def encrypt_string(string):
     hash.update(string)
     return hash.hexdigest()
 
-def calcCombinations(length, level):
-     alphabet_low = ""
-     alphabet_high = ""
-     digits = ""
 
-     if level >= 1:
+def calcCombinations(length, level):
+    alphabet_low = ""
+    alphabet_high = ""
+    digits = ""
+
+    if level >= 1:
         alphabet_low += string.ascii_lowercase
 
-     if level >= 2:
+    if level >= 2:
         alphabet_high += string.ascii_uppercase
 
-     if level == 3:
+    if level == 3:
         digits += string.digits
 
-     list_of_combinations = itertools.product(alphabet_low+alphabet_high+digits, repeat=length)
+    list_of_combinations = itertools.product(
+        alphabet_low + alphabet_high + digits, repeat=length)
 
-     hashes = open("combinations", 'wb')
-     for v in list_of_combinations:
+    hashes = open("combinations", 'wb')
+    for v in list_of_combinations:
 
-         target = ""
-         for i in range(length):
-             target += v[i]
+        target = ""
+        for i in range(length):
+            target += v[i]
 
-         hashes.write(target + "\n")
+        hashes.write(target + "\n")
 
+    hashes.close()
 
-     hashes.close()
 
 def bruteForce(a, b):
-    target = ""
-    current = ""
 
     fileS = open(a, 'r')
     fileD = open(b, 'r')
 
-
     srcHashes = fileS.readlines()
     srcPsw = fileD.readlines()
 
-
     for srcHash in srcHashes:
         for entry in srcPsw:
-            hash = encrypt_string(entry[:len(entry)-1])
+            hash = encrypt_string(entry[:len(entry) - 1])
 
-            if hash == srcHash[:len(srcHash)-1]:
+            if hash == srcHash[:len(srcHash) - 1]:
                 print("MATCH HASH " + hash)
                 print("PASSWORD IS " + entry)
                 print("")
 
-
     fileD.close()
     fileS.close()
+
 
 def printHelp():
 
